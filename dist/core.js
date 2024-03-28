@@ -2,6 +2,23 @@ class SimpleCaptcha {
   constructor() {}
 
   ribbon(config) {
+    let ribbonConfig = {
+      title: "Website protected!",
+      icon: true,
+      position: "bottom-left",
+      link: "",
+    };
+    if (config) {
+      if (config?.title) {
+        ribbonConfig = { ...ribbonConfig, title: config?.title };
+      }
+      if (config?.icon) {
+        ribbonConfig = { ...ribbonConfig, icon: config?.icon };
+      }
+      if (config?.position) {
+        ribbonConfig = { ...ribbonConfig, position: config?.position };
+      }
+    }
     const simpleCaptchaRibbon = document.createElement("div");
 
     simpleCaptchaRibbon.id = "simple-captcha-ribbon";
@@ -13,8 +30,6 @@ class SimpleCaptcha {
     simpleCaptchaRibbon.style.padding = "10px";
     simpleCaptchaRibbon.style.backgroundColor = "#f0f0f0";
     simpleCaptchaRibbon.style.position = "absolute";
-    simpleCaptchaRibbon.style.bottom = "0";
-    simpleCaptchaRibbon.style.right = "15px";
     simpleCaptchaRibbon.style.gap = "5px";
     simpleCaptchaRibbon.style.boxShadow =
       "-2px 1px 14px 0px rgba(151,151,151,0.75)";
@@ -22,11 +37,32 @@ class SimpleCaptcha {
       "-2px 1px 14px 0px rgba(151,151,151,0.75)";
     simpleCaptchaRibbon.style.mozBoxShadow =
       "-2px 1px 14px 0px rgba(151,151,151,0.75)";
+    switch (ribbonConfig) {
+      case "top-left":
+        simpleCaptchaRibbon.style.top = "0";
+        simpleCaptchaRibbon.style.left = "25px";
+        break;
+      case "top-right":
+        simpleCaptchaRibbon.style.top = "0";
+        simpleCaptchaRibbon.style.right = "25px";
+        break;
+      case "bottom-left":
+        simpleCaptchaRibbon.style.bottom = "0";
+        simpleCaptchaRibbon.style.left = "25px";
+        break;
+      case "bottom-right":
+        simpleCaptchaRibbon.style.bottom = "0";
+        simpleCaptchaRibbon.style.right = "25px";
+        break;
+      default:
+        simpleCaptchaRibbon.style.bottom = "0";
+        simpleCaptchaRibbon.style.right = "25px";
+    }
 
     const ribbonText = document.createElement("a");
     ribbonText.href = config.link;
     ribbonText.target = "_blank";
-    ribbonText.textContent = config.title;
+    ribbonText.textContent = ribbonConfig.title;
     ribbonText.style.color = "black";
     ribbonText.style.fontFamily = "sans-serif";
     ribbonText.style.fontWeight = "700";
