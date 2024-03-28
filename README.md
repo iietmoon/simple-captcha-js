@@ -7,7 +7,7 @@
 <h2 align="center">Guarding Your Website Forms, One Click at a Time!</h2>
 
 <p align="center">
-Simple captcha is a JavaScript library that provides an easy-to-use CAPTCHA solution for enhancing the security of forms on your website. It offers flexibility and convenience with string-based and calculation-based CAPTCHA options.
+Simple captcha is a JavaScript library that provides an easy-to-use CAPTCHA solution for enhancing the security of forms on your website. It offers flexibility and convenience with string-based and calculation-based options.
 </p>
 
 ## Features ✨
