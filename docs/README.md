@@ -1,13 +1,7 @@
-<p align="center">
-  <a href="https://otha.works/simple-captcha">
-    <img src="https://i.ibb.co/TWGHw5w/simple-captcha-js.png" alt="Simple captcha" width="125px">
-  </a>
-</p>
-<h2 align="center">Guarding Your Website Forms, One Click at a Time!</h2>
+## Get Started 🚀
 
-<p align="center">
 Simple captcha is a JavaScript library that provides an easy-to-use CAPTCHA solution for enhancing the security of forms on your website. It offers flexibility and convenience with string-based and calculation-based CAPTCHA options.
-</p>
+
 
 ## Features ✨
 
@@ -17,7 +11,7 @@ Simple captcha is a JavaScript library that provides an easy-to-use CAPTCHA solu
 - Customization options for CAPTCHA settings
 - Reliable security against spam and malicious attacks
 
-## Installation 🚀
+## Installation ⚙️
 
 1. Include the simple captcha library in your HTML file:
 
