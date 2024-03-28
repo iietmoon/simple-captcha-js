@@ -1,3 +1,7 @@
+function getRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 class SimpleCaptcha {
   constructor() {}
 
@@ -84,8 +88,31 @@ class SimpleCaptcha {
       }
     }
   }
+  captcha(config) {
+    const form = document.getElementById(config?.formId);
+    if (!form) {
+      console.error("Form not found");
+      return;
+    }
+
+    const submitButton = form.querySelector('input[type="submit"]');
+    if (!submitButton) {
+      console.error("Submit button not found");
+      return;
+    }
+
+    console.log(getRandomNumber(1, 9));
+    const captchaHeading = document.createElement("h1");
+    captchaHeading.textContent = "This is a captcha";
+
+    form.insertBefore(captchaHeading, submitButton);
+  }
 
   init(config) {
+    console.log(config);
     this.ribbon(config?.ribbon);
+    if (config?.captcha) {
+      this.captcha(config?.captcha);
+    }
   }
 }

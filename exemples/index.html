@@ -42,11 +42,10 @@
         const captcha = new SimpleCaptcha()
         captcha.init({
             ribbon: {
-                display: true,
-                title: "Website protected!",
-                icon: true,
-                position: "bottom-left",
-                link: 'https://iietmoon.github.io/simple-captcha-js',
+                display: false,
+            },
+            captcha: {
+                formId: 'example-id'
             }
         })
     </script>
