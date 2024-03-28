@@ -1,0 +1,1 @@
+console.log("Start init the js")
