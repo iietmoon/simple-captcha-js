@@ -4,19 +4,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>SimpleCaptcha.js Example</title>
     <script src="/dist/core.js"></script>
+    <style>
+        /* Add some basic styling for the form */
+        form {
+            margin-top: 20px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
 </head>
 
 <body>
     <h1>Hello to SimpleCaptcha.js</h1>
-    <script>
-        const captcha = new SimpleCaptcha();
+    <form id="example-id" action="">
+        <input type="text" placeholder="mail@example.com">
+        <input type="text" placeholder="phone number">
+        <div id="captchaContainer"></div>
+        <input type="submit" value="Submit">
+    </form>
 
+    <script>
+        const captcha = new SimpleCaptcha()
         captcha.ribbon({
-            //title: "Website protected!",
+            display: true,
+            title: "Website protected!",
             icon: true,
-            position: 'bottom-left'
+            position: "bottom-right",
+            link: 'https://iietmoon.github.io/simple-captcha-js',
         })
     </script>
 </body>

@@ -2,25 +2,17 @@ class SimpleCaptcha {
   constructor() {}
 
   ribbon(config) {
-    let ribbonConfig = {
+    const defaultConfig = {
+      display: true,
       title: "Website protected!",
       icon: true,
       position: "bottom-left",
-      link: "",
+      link: "https://iietmoon.github.io/simple-captcha-js",
     };
-    if (config) {
-      if (config?.title) {
-        ribbonConfig = { ...ribbonConfig, title: config?.title };
-      }
-      if (config?.icon) {
-        ribbonConfig = { ...ribbonConfig, icon: config?.icon };
-      }
-      if (config?.position) {
-        ribbonConfig = { ...ribbonConfig, position: config?.position };
-      }
-    }
-    const simpleCaptchaRibbon = document.createElement("div");
 
+    const ribbonConfig = { ...defaultConfig, ...config };
+
+    const simpleCaptchaRibbon = document.createElement("div");
     simpleCaptchaRibbon.id = "simple-captcha-ribbon";
     simpleCaptchaRibbon.className = "simple-captcha-ribbon";
     simpleCaptchaRibbon.style.display = "flex";
@@ -37,7 +29,8 @@ class SimpleCaptcha {
       "-2px 1px 14px 0px rgba(151,151,151,0.75)";
     simpleCaptchaRibbon.style.mozBoxShadow =
       "-2px 1px 14px 0px rgba(151,151,151,0.75)";
-    switch (ribbonConfig) {
+
+    switch (ribbonConfig.position) {
       case "top-left":
         simpleCaptchaRibbon.style.top = "0";
         simpleCaptchaRibbon.style.left = "25px";
@@ -60,7 +53,7 @@ class SimpleCaptcha {
     }
 
     const ribbonText = document.createElement("a");
-    ribbonText.href = config.link;
+    ribbonText.href = ribbonConfig.link;
     ribbonText.target = "_blank";
     ribbonText.textContent = ribbonConfig.title;
     ribbonText.style.color = "black";
@@ -71,19 +64,24 @@ class SimpleCaptcha {
 
     simpleCaptchaRibbon.appendChild(ribbonText);
 
-    if (config.icon) {
+    if (ribbonConfig.icon) {
       const captchaImage = document.createElement("img");
       captchaImage.src = "/assets/img/icon.svg";
       captchaImage.alt = "CAPTCHA Icon";
-      captchaImage.style = "width: 15px";
+      captchaImage.style.width = "15px"; // Changed from style to style.width
       simpleCaptchaRibbon.appendChild(captchaImage);
     }
 
-    const body = document.getElementsByTagName("body")[0];
-    if (config.position === "bottom-left") {
-      body.insertBefore(simpleCaptchaRibbon, body.firstChild);
-    } else {
-      body.appendChild(simpleCaptchaRibbon);
+    const body = document.body;
+    if (ribbonConfig.display) {
+      if (
+        ribbonConfig.position === "bottom-right" ||
+        ribbonConfig.position === "bottom-left"
+      ) {
+        body.insertBefore(simpleCaptchaRibbon, body.firstChild);
+      } else {
+        body.appendChild(simpleCaptchaRibbon);
+      }
     }
   }
 }
