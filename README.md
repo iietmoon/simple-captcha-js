@@ -29,6 +29,13 @@ Simple captcha is a JavaScript library that provides an easy-to-use CAPTCHA solu
 
 ```javascript
 const captcha = new SimpleCaptcha();
+
+captcha.ribbon({
+    title: "Website protected!",
+    icon: true,
+    position: 'bottom-left'
+})
+
 ```
 
 ## Usage 🤖
