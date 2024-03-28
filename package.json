@@ -1,0 +1,18 @@
+{
+  "name": "simple-captcha-js",
+  "version": "1.0.0",
+  "description": "A lightweight pure javascript simple captcha for guarding your forms, one click at a time!",
+  "main": "core.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "minify": "node .scripts/minify.js",
+    "prepare": "husky"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "husky": "^9.0.11",
+    "uglify-js": "^3.17.4"
+  }
+}
