@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://otha.works/simple-captcha">
-    <img src="https://i.ibb.co/TWGHw5w/simple-captcha-js.png" alt="Simple captcha" width="125px">
+    <img src="https://i.ibb.co/S3zTMLM/simple-captcha-js.png" alt="Simple captcha" width="125px">
     <h6>SimpleCaptcha.js</h6>
   </a>
 </p>
