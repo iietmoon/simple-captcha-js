@@ -4,8 +4,9 @@
   "description": "A lightweight pure javascript simple captcha for guarding your forms, one click at a time!",
   "main": "core.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "minify": "node .scripts/minify.js",
+    "format": "prettier --write dist/**/*.js",
+    "exemples": "http-server examples -p 4000",
     "prepare": "husky"
   },
   "keywords": [],
@@ -14,5 +15,8 @@
   "dependencies": {
     "husky": "^9.0.11",
     "uglify-js": "^3.17.4"
+  },
+  "devDependencies": {
+    "prettier": "^3.2.5"
   }
 }

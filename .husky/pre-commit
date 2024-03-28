@@ -1,1 +1,5 @@
+#!/usr/bin/env sh
+
+npm run format
 npm run minify
+git add .
