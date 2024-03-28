@@ -22,7 +22,7 @@ Simple captcha is a JavaScript library that provides an easy-to-use CAPTCHA solu
 1. Include the simple captcha library in your HTML file:
 
 ```html
-   <script src="https://cdnjs.cloudflare.com/simple-captcha/core.min.js"> </script>
+   <script src="//cdn.jsdelivr.net/npm/simple-capthcha-js@1/dist/core.min.js"> </script>
 ```
 
 2. Initialize SimpleCaptcha on your website forms using JavaScript:

@@ -7,6 +7,7 @@
     "minify": "node .scripts/minify.js",
     "format": "prettier --write dist/**/*.js",
     "exemples": "http-server examples -p 4000",
+    "docs": "docsify serve docs",
     "prepare": "husky"
   },
   "keywords": [],
