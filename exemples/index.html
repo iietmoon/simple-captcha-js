@@ -40,12 +40,14 @@
 
     <script>
         const captcha = new SimpleCaptcha()
-        captcha.ribbon({
-            display: true,
-            title: "Website protected!",
-            icon: true,
-            position: "bottom-right",
-            link: 'https://iietmoon.github.io/simple-captcha-js',
+        captcha.init({
+            ribbon: {
+                display: true,
+                title: "Website protected!",
+                icon: true,
+                position: "bottom-left",
+                link: 'https://iietmoon.github.io/simple-captcha-js',
+            }
         })
     </script>
 </body>

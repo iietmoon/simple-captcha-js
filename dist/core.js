@@ -6,7 +6,7 @@ class SimpleCaptcha {
       display: true,
       title: "Website protected!",
       icon: true,
-      position: "bottom-left",
+      position: "bottom-right",
       link: "https://iietmoon.github.io/simple-captcha-js",
     };
 
@@ -83,5 +83,9 @@ class SimpleCaptcha {
         body.appendChild(simpleCaptchaRibbon);
       }
     }
+  }
+
+  init(config) {
+    this.ribbon(config?.ribbon);
   }
 }
