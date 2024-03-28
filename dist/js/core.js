@@ -1,7 +1,23 @@
 function getRandomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-
+function captchaValues() {
+  const value1 = getRandomNumber(1, 9);
+  const value2 = getRandomNumber(1, 9);
+  return { value1, value2 };
+}
+function captchaValidity() {
+  return true;
+}
+const defaultCSSClasses = {
+  ribbon: {},
+  captcha: {
+    container: "simple-captcha-container",
+    values: "simple-captcha-value",
+    input: "simple-captcha-input",
+    flag: "simple-captcha-flag",
+  },
+};
 class SimpleCaptcha {
   constructor() {}
 
@@ -101,11 +117,45 @@ class SimpleCaptcha {
       return;
     }
 
-    console.log(getRandomNumber(1, 9));
-    const captchaHeading = document.createElement("h1");
-    captchaHeading.textContent = "This is a captcha";
+    const captchaContainer = document.createElement("div");
+    captchaContainer.className = defaultCSSClasses.captcha.container;
 
-    form.insertBefore(captchaHeading, submitButton);
+    const spanElement = document.createElement("span");
+    const captchaValuesResult = captchaValues(); // Call captchaValues() once
+    spanElement.textContent = `${captchaValuesResult.value1} + ${captchaValuesResult.value2} = `;
+    spanElement.className = defaultCSSClasses.captcha.values;
+
+    const inputElement = document.createElement("input");
+    inputElement.type = "number";
+    inputElement.className = defaultCSSClasses.captcha.input;
+
+    const refreshElement = document.createElement("img");
+    refreshElement.src = "/assets/img/arrow-clockwise.svg";
+    refreshElement.width = 20;
+    refreshElement.style.cursor = "pointer";
+    refreshElement.addEventListener("click", function () {
+      const newValues = captchaValues();
+      inputElement.value = "";
+      spanElement.textContent = `${newValues.value1} + ${newValues.value2} = `;
+    });
+
+    const flagElement = document.createElement("span");
+    flagElement.className = defaultCSSClasses.captcha.flag;
+    flagElement.textContent = "Please verify that you're not a robot!";
+
+    captchaContainer.appendChild(spanElement);
+    captchaContainer.appendChild(inputElement);
+    captchaContainer.appendChild(refreshElement);
+    captchaContainer.appendChild(flagElement);
+
+    form.insertBefore(captchaContainer, submitButton);
+
+    submitButton.addEventListener("click", function (event) {
+      event.preventDefault(); // Prevent the default form submission behavior
+      if (captchaValidity()) {
+        form.submit();
+      }
+    });
   }
 
   init(config) {
