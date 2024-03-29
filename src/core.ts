@@ -1,16 +1,42 @@
 
-function getRandomNumber(min:any, max:any) {
+interface DefaultCSSClasses {
+  ribbon: Record<string, any>;
+  captcha: {
+    container: string;
+    values: string;
+    input: string;
+    flag: string;
+  };
+}
+
+interface RibbonConfig {
+  display?: boolean;
+  title?: string;
+  icon?: boolean;
+  position?: "top-left" | "top-right" | "bottom-left" | "bottom-right";
+  link?: string;
+}
+
+interface CaptchaConfig {
+  formId?: string;
+}
+
+console.log("This test from typescript")
+function getRandomNumber(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-function captchaValues() {
-  const value1 = getRandomNumber(1, 9);
-  const value2 = getRandomNumber(1, 9);
+
+function captchaValues(): { value1: number, value2: number } {
+  const value1: number = getRandomNumber(1, 9);
+  const value2: number = getRandomNumber(1, 9);
   return { value1, value2 };
 }
+
 function captchaValidity():boolean {
   return true;
 }
-const defaultCSSClasses = {
+
+const defaultCSSClasses: DefaultCSSClasses = {
   ribbon: {},
   captcha: {
     container: "simple-captcha-container",
@@ -19,11 +45,12 @@ const defaultCSSClasses = {
     flag: "simple-captcha-flag",
   },
 };
+
 class SimpleCaptcha {
   constructor() {}
 
-  ribbon(config:any) {
-    const defaultConfig = {
+  ribbon(config: RibbonConfig): void {
+    const defaultConfig: RibbonConfig = {
       display: true,
       title: "Website protected!",
       icon: true,
@@ -31,7 +58,7 @@ class SimpleCaptcha {
       link: "https://iietmoon.github.io/simple-captcha-js",
     };
 
-    const ribbonConfig = { ...defaultConfig, ...config };
+    const ribbonConfig: RibbonConfig = { ...defaultConfig, ...config };
 
     const simpleCaptchaRibbon = document.createElement("div");
     simpleCaptchaRibbon.id = "simple-captcha-ribbon";
@@ -100,7 +127,8 @@ class SimpleCaptcha {
       }
     }
   }
-  captcha(config:any) {
+
+  captcha(config: CaptchaConfig): void {
     const form = document.getElementById(config?.formId);
     if (!form) {
       console.error("Form not found");
@@ -155,7 +183,7 @@ class SimpleCaptcha {
     });
   }
 
-  init(config:any) {
+  init(config: any): void {
     console.log(config);
     this.ribbon(config?.ribbon);
     if (config?.captcha) {
