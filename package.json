@@ -5,6 +5,7 @@
   "main": "core.js",
   "scripts": {
     "ts": "tsc",
+    "dev": "nodemon --watch src --ext ts,scss --exec \"npm run build\"",
     "build": "node .scripts/build.js",
     "minify:js": "node .scripts/utils/minify-js.js",
     "minify:css": "node .scripts/utils/minify-css.js",
@@ -22,6 +23,7 @@
   },
   "devDependencies": {
     "node-sass": "^9.0.0",
+    "nodemon": "^3.1.0",
     "prettier": "^3.2.5",
     "typescript": "^5.4.3",
     "uglifycss": "^0.0.29"

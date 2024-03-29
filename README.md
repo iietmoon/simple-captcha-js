@@ -28,13 +28,19 @@ Simple captcha is a JavaScript library that provides an easy-to-use CAPTCHA solu
 2. Initialize SimpleCaptcha on your website forms using JavaScript:
 
 ```javascript
-const captcha = new SimpleCaptcha();
 
-captcha.ribbon({
-    title: "Website protected!",
-    icon: true,
-    position: 'bottom-left'
-})
+const captcha = new SimpleCaptcha()
+
+captcha.init({
+  ribbon: {
+      display: false,
+  },
+  captcha:{
+      formId: 'example-id',
+      algorightm: 'rondom-string',
+      difficulty: 'medium'
+  }
+ })
 
 ```
 

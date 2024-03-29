@@ -1,29 +1,55 @@
 
-function getRandomNumber(min:any, max:any) {
+interface DefaultCSSClasses {
+  main: string;
+  ribbon: Record<string, any>;
+  captcha: Record<string, any>;
+}
+
+interface RibbonConfig {
+  display?: boolean;
+  title?: string;
+  icon?: boolean;
+  position?: "top-left" | "top-right" | "bottom-left" | "bottom-right";
+  link?: string;
+}
+
+interface CaptchaConfig {
+  formId?: string;
+}
+
+function getRandomNumber(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-function captchaValues() {
-  const value1 = getRandomNumber(1, 9);
-  const value2 = getRandomNumber(1, 9);
+
+function captchaValues(): { value1: number, value2: number } {
+  const value1: number = getRandomNumber(1, 9);
+  const value2: number = getRandomNumber(1, 9);
   return { value1, value2 };
 }
+
 function captchaValidity():boolean {
-  return true;
+  return false;
 }
-const defaultCSSClasses = {
-  ribbon: {},
+
+const defaultCSSClasses: DefaultCSSClasses = {
+  main: 'scjs',
+  ribbon: {
+    container: 'scjs-ribbon-container'
+  },
   captcha: {
-    container: "simple-captcha-container",
-    values: "simple-captcha-value",
-    input: "simple-captcha-input",
-    flag: "simple-captcha-flag",
+    main: 'scjs',
+    container: "scjs-captcha-container",
+    values: "scjs-captcha-value",
+    input: "scjs-captcha-input",
+    flag: "scjs-captcha-flag",
   },
 };
+
 class SimpleCaptcha {
   constructor() {}
 
-  ribbon(config:any) {
-    const defaultConfig = {
+  ribbon(config: RibbonConfig): void {
+    const defaultConfig: RibbonConfig = {
       display: true,
       title: "Website protected!",
       icon: true,
@@ -31,21 +57,12 @@ class SimpleCaptcha {
       link: "https://iietmoon.github.io/simple-captcha-js",
     };
 
-    const ribbonConfig = { ...defaultConfig, ...config };
+    const ribbonConfig: RibbonConfig = { ...defaultConfig, ...config };
 
     const simpleCaptchaRibbon = document.createElement("div");
     simpleCaptchaRibbon.id = "simple-captcha-ribbon";
-    simpleCaptchaRibbon.className = "simple-captcha-ribbon";
-    simpleCaptchaRibbon.style.display = "flex";
-    simpleCaptchaRibbon.style.alignItems = "center";
-    simpleCaptchaRibbon.style.justifyContent = "center";
-    simpleCaptchaRibbon.style.width = "fit-content";
-    simpleCaptchaRibbon.style.padding = "10px";
-    simpleCaptchaRibbon.style.backgroundColor = "#f0f0f0";
-    simpleCaptchaRibbon.style.position = "absolute";
-    simpleCaptchaRibbon.style.gap = "5px";
-    simpleCaptchaRibbon.style.boxShadow =
-      "-2px 1px 14px 0px rgba(151,151,151,0.75)";
+    simpleCaptchaRibbon.className = defaultCSSClasses.main;
+    simpleCaptchaRibbon.classList.add(defaultCSSClasses.ribbon.container);
     switch (ribbonConfig.position) {
       case "top-left":
         simpleCaptchaRibbon.style.top = "0";
@@ -100,7 +117,8 @@ class SimpleCaptcha {
       }
     }
   }
-  captcha(config:any) {
+
+  captcha(config: CaptchaConfig): void {
     const form = document.getElementById(config?.formId);
     if (!form) {
       console.error("Form not found");
@@ -114,7 +132,8 @@ class SimpleCaptcha {
     }
 
     const captchaContainer = document.createElement("div");
-    captchaContainer.className = defaultCSSClasses.captcha.container;
+    captchaContainer.className = defaultCSSClasses.main;
+    captchaContainer.classList.add(defaultCSSClasses.captcha.container);
 
     const spanElement = document.createElement("span");
     const captchaValuesResult = captchaValues(); // Call captchaValues() once
@@ -147,15 +166,14 @@ class SimpleCaptcha {
     form.insertBefore(captchaContainer, submitButton);
 
     submitButton.addEventListener("click", function (event) {
-      event.preventDefault(); // Prevent the default form submission behavior
+      event.preventDefault();
       if (captchaValidity()) {
-        // @ts-ignore
-        form.submit();
+        (form as HTMLFormElement).submit();
       }
     });
   }
 
-  init(config:any) {
+  init(config: any): void {
     console.log(config);
     this.ribbon(config?.ribbon);
     if (config?.captcha) {

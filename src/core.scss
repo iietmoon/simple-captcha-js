@@ -1,28 +1,125 @@
-.simple-captcha-container{
-    background-color: #f0f0f0;
-    border: 1px solid #747474;;
-    padding: 10px 15px;
-    display: flex;
-    gap: 10px;
-    width: fit-content;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 25px;
-    border-radius: 3px;
-}
-.simple-captcha-value{
-    font-weight: 700;
-    color: black;
-}
-.simple-captcha-input{
-    height: 25px;
-    border: 1px solid #a2a2a2;
-    border-radius: 3px;
-}
-.simple-captcha-input.error{
-    border-color: red;
-}
-.simple-captcha-flag{
-    font-size: 13px;
-    color: #747474;
+/* ==========================================
+   This file contains global styling rules that are applied throughout the application.
+
+   Author: Othmane N.
+   Github: https://github.com/iietmoon
+   ==========================================
+*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+
+$dark-color-200: #0e080540;
+$dark-color-400: #0e080580;
+$dark-color-600: #0e0805;
+
+$light-color-200: #7474742a;
+$light-color-400: #74747480;
+$light-color-600: #747474;
+
+$danger-color-200: #e4141440;
+$danger-color-400: #e4141480;
+$danger-color-600: #e41414;
+
+$success-color-200: #008f1840;
+$success-color-400: #008f1880;
+$success-color-600: #008f18;
+
+
+$font-family-poppins: "Poppins", sans-serif;
+
+// Define font weights
+$font-weight-thin: 100;
+$font-weight-extra-light: 200;
+$font-weight-light: 300;
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+$font-weight-extra-bold: 800;
+$font-weight-black: 900;
+
+// Define font styles
+$font-style-normal: normal;
+$font-style-italic: italic;
+
+
+$base-font-size: 16px;
+$small-font-size: $base-font-size - 4px;
+$large-font-size: $base-font-size + 4px;
+$xlarge-font-size: $large-font-size + 4px;
+
+$base-spacing-unit: 10px;
+
+$base-padding: $base-spacing-unit $base-spacing-unit * 2;
+$base-margin: $base-spacing-unit;
+
+$base-gap: $base-spacing-unit;
+
+$border-radius: 3px;
+$border-width: 1px;
+$border-color: $dark-color-400;
+$border-color-muted: $light-color-400;
+
+$transition-speedy: 0.5s;
+$transition-medium: 1s;
+$transition-slow: 1.5s;
+
+$box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+.scjs {
+    *{
+        font-family: $font-family-poppins;
+    }
+    &.scjs-ribbon-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: fit-content;
+        gap: 5px;
+        padding: 10px;
+        background-color: $light-color-200;
+        border: $border-width solid $border-color;
+        border-bottom: none;
+        border-top-left-radius: $border-radius;
+        border-top-right-radius: $border-radius;
+        position: absolute;
+        box-shadow: $box-shadow;
+    }
+
+    &.scjs-captcha-container {
+        background-color: $light-color-200;
+        border: $border-width solid $border-color;
+        padding: $base-padding;
+        display: flex;
+        gap: $base-gap;
+        width: fit-content;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: $base-margin;
+        border-radius: $border-radius;
+
+        .scjs-captcha-value {
+            font-weight: $font-weight-bold;
+            color: $dark-color-600;
+        }
+
+        .scjs-captcha-input {
+            height: 25px;
+            border: $border-width solid $border-color-muted;
+            border-radius: $border-radius;
+
+            &.error {
+                border-color: $danger-color-600;
+            }
+        }
+
+        .scjs-captcha-flag {
+            font-size: $small-font-size;
+            color: $light-color-600;
+        }
+    }
 }

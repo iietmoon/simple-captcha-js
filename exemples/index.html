@@ -42,11 +42,13 @@
         const captcha = new SimpleCaptcha()
         captcha.init({
             ribbon: {
-                display: false,
+                display: true,
             },
             captcha:{
                 display: true,
-                formId: 'example-id'
+                formId: 'example-id',
+                algorightm: 'rondom-string',
+                difficulty: 'medium'
             }
         })
     </script>
