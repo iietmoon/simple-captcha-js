@@ -35,7 +35,6 @@
     <form id="example-id" action="">
         <input type="text" placeholder="mail@example.com">
         <input type="text" placeholder="phone number">
-        <div id="captchaContainer"></div>
         <input type="submit" value="Submit">
     </form>
 
@@ -45,7 +44,8 @@
             ribbon: {
                 display: false,
             },
-            captcha: {
+            captcha:{
+                display: true,
                 formId: 'example-id'
             }
         })
