@@ -28,7 +28,7 @@ function captchaValues(): { value1: number, value2: number } {
 }
 
 function captchaValidity():boolean {
-  return true;
+  return false;
 }
 
 const defaultCSSClasses: DefaultCSSClasses = {
@@ -38,10 +38,10 @@ const defaultCSSClasses: DefaultCSSClasses = {
   },
   captcha: {
     main: 'scjs',
-    container: "simple-captcha-container",
-    values: "simple-captcha-value",
-    input: "simple-captcha-input",
-    flag: "simple-captcha-flag",
+    container: "scjs-captcha-container",
+    values: "scjs-captcha-value",
+    input: "scjs-captcha-input",
+    flag: "scjs-captcha-flag",
   },
 };
 
@@ -132,7 +132,8 @@ class SimpleCaptcha {
     }
 
     const captchaContainer = document.createElement("div");
-    captchaContainer.className = defaultCSSClasses.captcha.container;
+    captchaContainer.className = defaultCSSClasses.main;
+    captchaContainer.classList.add(defaultCSSClasses.captcha.container);
 
     const spanElement = document.createElement("span");
     const captchaValuesResult = captchaValues(); // Call captchaValues() once
@@ -165,10 +166,9 @@ class SimpleCaptcha {
     form.insertBefore(captchaContainer, submitButton);
 
     submitButton.addEventListener("click", function (event) {
-      event.preventDefault(); // Prevent the default form submission behavior
+      event.preventDefault();
       if (captchaValidity()) {
-        // @ts-ignore
-        form.submit();
+        (form as HTMLFormElement).submit();
       }
     });
   }

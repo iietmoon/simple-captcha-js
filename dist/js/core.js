@@ -7,7 +7,7 @@ function captchaValues() {
   return { value1, value2 };
 }
 function captchaValidity() {
-  return true;
+  return false;
 }
 const defaultCSSClasses = {
   main: "scjs",
@@ -16,10 +16,10 @@ const defaultCSSClasses = {
   },
   captcha: {
     main: "scjs",
-    container: "simple-captcha-container",
-    values: "simple-captcha-value",
-    input: "simple-captcha-input",
-    flag: "simple-captcha-flag",
+    container: "scjs-captcha-container",
+    values: "scjs-captcha-value",
+    input: "scjs-captcha-input",
+    flag: "scjs-captcha-flag",
   },
 };
 class SimpleCaptcha {
@@ -104,7 +104,8 @@ class SimpleCaptcha {
       return;
     }
     const captchaContainer = document.createElement("div");
-    captchaContainer.className = defaultCSSClasses.captcha.container;
+    captchaContainer.className = defaultCSSClasses.main;
+    captchaContainer.classList.add(defaultCSSClasses.captcha.container);
     const spanElement = document.createElement("span");
     const captchaValuesResult = captchaValues(); // Call captchaValues() once
     spanElement.textContent = `${captchaValuesResult.value1} + ${captchaValuesResult.value2} = `;
@@ -130,9 +131,8 @@ class SimpleCaptcha {
     captchaContainer.appendChild(flagElement);
     form.insertBefore(captchaContainer, submitButton);
     submitButton.addEventListener("click", function (event) {
-      event.preventDefault(); // Prevent the default form submission behavior
+      event.preventDefault();
       if (captchaValidity()) {
-        // @ts-ignore
         form.submit();
       }
     });
