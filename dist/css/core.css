@@ -1,4 +1,15 @@
-.simple-captcha-container {
+.scjs.scjs-ribbon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  gap: 5px;
+  padding: 10px;
+  background-color: #f0f0f0;
+  position: absolute;
+  box-shadow: -2px 1px 14px 0px rgba(151, 151, 151, 0.75); }
+
+.scjs.scjs-captcha-container {
   background-color: #f0f0f0;
   border: 1px solid #747474;
   padding: 10px 15px;
@@ -9,19 +20,15 @@
   justify-content: center;
   margin-bottom: 25px;
   border-radius: 3px; }
-
-.simple-captcha-value {
-  font-weight: 700;
-  color: black; }
-
-.simple-captcha-input {
-  height: 25px;
-  border: 1px solid #a2a2a2;
-  border-radius: 3px; }
-
-.simple-captcha-input.error {
-  border-color: red; }
-
-.simple-captcha-flag {
-  font-size: 13px;
-  color: #747474; }
+  .scjs.scjs-captcha-container .scjs-captcha-value {
+    font-weight: 700;
+    color: black; }
+  .scjs.scjs-captcha-container .scjs-captcha-input {
+    height: 25px;
+    border: 1px solid #a2a2a2;
+    border-radius: 3px; }
+    .scjs.scjs-captcha-container .scjs-captcha-input.error {
+      border-color: red; }
+  .scjs.scjs-captcha-container .scjs-captcha-flag {
+    font-size: 13px;
+    color: #747474; }

@@ -1,12 +1,8 @@
 
 interface DefaultCSSClasses {
+  main: string;
   ribbon: Record<string, any>;
-  captcha: {
-    container: string;
-    values: string;
-    input: string;
-    flag: string;
-  };
+  captcha: Record<string, any>;
 }
 
 interface RibbonConfig {
@@ -21,7 +17,6 @@ interface CaptchaConfig {
   formId?: string;
 }
 
-console.log("This test from typescript")
 function getRandomNumber(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -37,8 +32,12 @@ function captchaValidity():boolean {
 }
 
 const defaultCSSClasses: DefaultCSSClasses = {
-  ribbon: {},
+  main: 'scjs',
+  ribbon: {
+    container: 'scjs-ribbon-container'
+  },
   captcha: {
+    main: 'scjs',
     container: "simple-captcha-container",
     values: "simple-captcha-value",
     input: "simple-captcha-input",
@@ -62,17 +61,8 @@ class SimpleCaptcha {
 
     const simpleCaptchaRibbon = document.createElement("div");
     simpleCaptchaRibbon.id = "simple-captcha-ribbon";
-    simpleCaptchaRibbon.className = "simple-captcha-ribbon";
-    simpleCaptchaRibbon.style.display = "flex";
-    simpleCaptchaRibbon.style.alignItems = "center";
-    simpleCaptchaRibbon.style.justifyContent = "center";
-    simpleCaptchaRibbon.style.width = "fit-content";
-    simpleCaptchaRibbon.style.padding = "10px";
-    simpleCaptchaRibbon.style.backgroundColor = "#f0f0f0";
-    simpleCaptchaRibbon.style.position = "absolute";
-    simpleCaptchaRibbon.style.gap = "5px";
-    simpleCaptchaRibbon.style.boxShadow =
-      "-2px 1px 14px 0px rgba(151,151,151,0.75)";
+    simpleCaptchaRibbon.className = defaultCSSClasses.main;
+    simpleCaptchaRibbon.classList.add(defaultCSSClasses.ribbon.container);
     switch (ribbonConfig.position) {
       case "top-left":
         simpleCaptchaRibbon.style.top = "0";

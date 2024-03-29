@@ -5,7 +5,7 @@
   "main": "core.js",
   "scripts": {
     "ts": "tsc",
-    "dev": "nodemon --watch src -e ts --exec \"npm run build\"",
+    "dev": "nodemon --watch src --ext ts,scss --exec \"npm run build\"",
     "build": "node .scripts/build.js",
     "minify:js": "node .scripts/utils/minify-js.js",
     "minify:css": "node .scripts/utils/minify-css.js",
