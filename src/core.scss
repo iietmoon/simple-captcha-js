@@ -47,10 +47,10 @@ $font-style-normal: normal;
 $font-style-italic: italic;
 
 
-$base-font-size: 16px;
-$small-font-size: $base-font-size - 4px;
-$large-font-size: $base-font-size + 4px;
-$xlarge-font-size: $large-font-size + 4px;
+$base-font-size: 14px;
+$small-font-size: $base-font-size - 2px;
+$large-font-size: $base-font-size + 2px;
+$xlarge-font-size: $base-font-size + 6px;
 
 $base-spacing-unit: 10px;
 
@@ -105,12 +105,14 @@ $box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         .scjs-captcha-value {
             font-weight: $font-weight-bold;
             color: $dark-color-600;
+            font-size: $base-font-size;
         }
 
         .scjs-captcha-input {
             height: 25px;
             border: $border-width solid $border-color-muted;
             border-radius: $border-radius;
+            margin-bottom: 0;
 
             &.error {
                 border-color: $danger-color-600;

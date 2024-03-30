@@ -37,11 +37,13 @@
   border-radius: 3px; }
   .scjs.scjs-captcha-container .scjs-captcha-value {
     font-weight: 700;
-    color: #0e0805; }
+    color: #0e0805;
+    font-size: 14px; }
   .scjs.scjs-captcha-container .scjs-captcha-input {
     height: 25px;
     border: 1px solid #74747480;
-    border-radius: 3px; }
+    border-radius: 3px;
+    margin-bottom: 0; }
     .scjs.scjs-captcha-container .scjs-captcha-input.error {
       border-color: #e41414; }
   .scjs.scjs-captcha-container .scjs-captcha-flag {

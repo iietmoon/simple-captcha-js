@@ -1,4 +1,3 @@
-
 interface DefaultCSSClasses {
   main: string;
   ribbon: Record<string, any>;
@@ -14,36 +13,149 @@ interface RibbonConfig {
 }
 
 interface CaptchaConfig {
-  formId?: string;
-}
-
-function getRandomNumber(min: number, max: number): number {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-function captchaValues(): { value1: number, value2: number } {
-  const value1: number = getRandomNumber(1, 9);
-  const value2: number = getRandomNumber(1, 9);
-  return { value1, value2 };
-}
-
-function captchaValidity():boolean {
-  return false;
+  formId: string;
+  display?: boolean;
+  alghorithm?:
+    | "text-based"
+    | "image-recognition"
+    | "audio-based"
+    | "checkbox"
+    | "mathematical"
+    | "honeypot";
+  difficulty?: "easy" | "medium" | "strong";
+  classes?: any;
 }
 
 const defaultCSSClasses: DefaultCSSClasses = {
-  main: 'scjs',
+  main: "scjs",
   ribbon: {
-    container: 'scjs-ribbon-container'
+    container: "scjs-ribbon-container",
   },
   captcha: {
-    main: 'scjs',
+    main: "scjs",
     container: "scjs-captcha-container",
     values: "scjs-captcha-value",
     input: "scjs-captcha-input",
     flag: "scjs-captcha-flag",
   },
 };
+
+class Utils {
+  static getRandomNumber(min: number, max: number): number {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  static generateRandomString(length: number): string {
+    const characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    let result = "";
+    for (let i = 0; i < length; i++) {
+      const randomIndex = this.getRandomNumber(0, characters.length - 1);
+      result += characters.charAt(randomIndex);
+    }
+    return result;
+  }
+}
+
+class CaptchaGenerator {
+  static textCaptcha(id: string, difficulty: string | 'medium'): string {
+    console.log(difficulty)
+    const difficultyDispatcher = {
+      easy: 6,
+      medium: 10,
+      strong: 14,
+    };
+    const targetCaptcha = document.getElementById(id);
+    if (targetCaptcha) {
+      const captchaValueElement = document.createElement("span");
+      captchaValueElement.id = id + "-value";
+      captchaValueElement.className = defaultCSSClasses.captcha.values;
+      captchaValueElement.textContent = Utils.generateRandomString(difficultyDispatcher[difficulty]);
+
+      const captchaInputElement = document.createElement('input')
+      captchaInputElement.id = id + "-input";
+      captchaInputElement.className = defaultCSSClasses.captcha.input
+      captchaInputElement.type = 'text'
+
+      targetCaptcha.appendChild(captchaValueElement);
+      targetCaptcha.appendChild(captchaInputElement);
+    } else {
+      console.error("Target captcha not found");
+    }
+    return "GeneratedTextCaptcha";
+  }
+
+  // Image Recognition CAPTCHA
+  static imageCaptcha(width: number, height: number): string {
+    // Logic to generate an image-based CAPTCHA with specified width and height
+    return "GeneratedImageCaptcha";
+  }
+
+  // Audio CAPTCHA
+  static audioCaptcha(length: number): string {
+    // Logic to generate an audio-based CAPTCHA of specified length
+    return "GeneratedAudioCaptcha";
+  }
+
+  // Mathematical CAPTCHA
+  static mathCaptcha(): string {
+    // Logic to generate a mathematical CAPTCHA
+    return "GeneratedMathCaptcha";
+  }
+
+  // Checkbox CAPTCHA
+  static checkboxCaptcha(): string {
+    // Logic to generate a checkbox-based CAPTCHA
+    return "GeneratedCheckboxCaptcha";
+  }
+
+  // Honeypot CAPTCHA
+  static honeypot(): string {
+    // Logic to generate a honeypot-based CAPTCHA
+    return "GeneratedHoneypotCaptcha";
+  }
+}
+
+class captchaValidity {
+  static textCaptcha(id: string): boolean {
+    const targetCaptcha = document.getElementById(id);
+    if(!targetCaptcha){
+      console.error("Can't valid the captcha since not found in target!");
+    }
+    //const captchaValue 
+    return false;
+  }
+
+  // Image Recognition CAPTCHA
+  static imageCaptcha(width: number, height: number): boolean {
+    // Logic to generate an image-based CAPTCHA with specified width and height
+    return true;
+  }
+
+  // Audio CAPTCHA
+  static audioCaptcha(length: number): boolean {
+    // Logic to generate an audio-based CAPTCHA of specified length
+    return true;
+  }
+
+  // Mathematical CAPTCHA
+  static mathCaptcha(): boolean {
+    // Logic to generate a mathematical CAPTCHA
+    return true;
+  }
+
+  // Checkbox CAPTCHA
+  static checkboxCaptcha(): boolean {
+    // Logic to generate a checkbox-based CAPTCHA
+    return true;
+  }
+
+  // Honeypot CAPTCHA
+  static honeypot(): boolean {
+    // Logic to generate a honeypot-based CAPTCHA
+    return true;
+  }
+}
 
 class SimpleCaptcha {
   constructor() {}
@@ -117,67 +229,56 @@ class SimpleCaptcha {
       }
     }
   }
-
-  captcha(config: CaptchaConfig): void {
-    const form = document.getElementById(config?.formId);
-    if (!form) {
-      console.error("Form not found");
+  captcha(config: CaptchaConfig) {
+    const { formId, display, alghorithm, difficulty='medium', classes }: CaptchaConfig =
+      config;
+    if (display === false) {
       return;
     }
-
-    const submitButton = form.querySelector('input[type="submit"]');
+    const targetForm = document.getElementById(formId);
+    if (!targetForm) {
+      console.error(`Form (${formId}) not found!`);
+      return;
+    }
+    const submitButton = targetForm.querySelector(
+      'input[type="submit"], button[type="submit"]'
+    );
     if (!submitButton) {
-      console.error("Submit button not found");
+      console.error(`Submit button not found in (${formId})`);
       return;
     }
+    const captchaId = Utils.generateRandomString(8);
 
     const captchaContainer = document.createElement("div");
     captchaContainer.className = defaultCSSClasses.main;
+    captchaContainer.id = captchaId;
     captchaContainer.classList.add(defaultCSSClasses.captcha.container);
 
-    const spanElement = document.createElement("span");
-    const captchaValuesResult = captchaValues(); // Call captchaValues() once
-    spanElement.textContent = `${captchaValuesResult.value1} + ${captchaValuesResult.value2} = `;
-    spanElement.className = defaultCSSClasses.captcha.values;
-
-    const inputElement = document.createElement("input");
-    inputElement.type = "number";
-    inputElement.className = defaultCSSClasses.captcha.input;
-
-    const refreshElement = document.createElement("img");
-    refreshElement.src = "/assets/img/arrow-clockwise.svg";
-    refreshElement.width = 20;
-    refreshElement.style.cursor = "pointer";
-    refreshElement.addEventListener("click", function () {
-      const newValues = captchaValues();
-      inputElement.value = "";
-      spanElement.textContent = `${newValues.value1} + ${newValues.value2} = `;
-    });
-
-    const flagElement = document.createElement("span");
-    flagElement.className = defaultCSSClasses.captcha.flag;
-    flagElement.textContent = "Please verify that you're not a robot!";
-
-    captchaContainer.appendChild(spanElement);
-    captchaContainer.appendChild(inputElement);
-    captchaContainer.appendChild(refreshElement);
-    captchaContainer.appendChild(flagElement);
-
-    form.insertBefore(captchaContainer, submitButton);
+    targetForm.insertBefore(captchaContainer, submitButton);
+    CaptchaGenerator.textCaptcha(captchaId, difficulty);
 
     submitButton.addEventListener("click", function (event) {
       event.preventDefault();
-      if (captchaValidity()) {
-        (form as HTMLFormElement).submit();
+      if(captchaValidity.textCaptcha(captchaId)){
+        (targetForm as HTMLFormElement).submit()
       }
+      console.log("try to submit " + formId);
+      return;
     });
   }
 
   init(config: any): void {
-    console.log(config);
     this.ribbon(config?.ribbon);
     if (config?.captcha) {
-      this.captcha(config?.captcha);
+      if (Array.isArray(config.captcha)) {
+        config.captcha.forEach((element: CaptchaConfig) => {
+          this.captcha(element);
+        });
+      } else if (typeof config.captcha === "object") {
+        this.captcha(config.captcha);
+      } else {
+        console.log("config.captcha is neither an array nor an object");
+      }
     }
   }
 }

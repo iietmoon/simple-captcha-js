@@ -20,7 +20,7 @@
             box-sizing: border-box;
         }
 
-        input[type="submit"] {
+        input[type="submit"], button[type="submit"] {
             padding: 10px 20px;
             background-color: #007bff;
             color: #fff;
@@ -32,10 +32,17 @@
 
 <body>
     <h1>Hello to SimpleCaptcha.js</h1>
-    <form id="example-id" action="">
+    <h3>Form test 1</h3>
+    <form id="form-1" action="">
         <input type="text" placeholder="mail@example.com">
         <input type="text" placeholder="phone number">
         <input type="submit" value="Submit">
+    </form>
+    <h3>Form test 2</h3>
+    <form id="form-2" action="">
+        <input type="text" placeholder="mail@example.com">
+        <input type="text" placeholder="phone number">
+        <button type="submit">Submit</button>
     </form>
 
     <script>
@@ -44,12 +51,17 @@
             ribbon: {
                 display: true,
             },
-            captcha:{
-                display: true,
-                formId: 'example-id',
-                algorightm: 'rondom-string',
-                difficulty: 'medium'
-            }
+            captcha: [
+                {
+                    formId: 'form-1',
+                    alghorithm: 'text-based',
+                    difficulty: 'easy'
+                },
+                {
+                    formId: 'form-2',
+                    alghorithm: 'text-based'
+                }
+            ]
         })
     </script>
 </body>
