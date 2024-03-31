@@ -44,7 +44,6 @@ class Utils {
   static getRandomNumber(min: number, max: number): number {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
-
   static generateRandomString(length: number): string {
     const characters =
       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -55,74 +54,121 @@ class Utils {
     }
     return result;
   }
+  static getRandomHexColor(): string {
+    const letters = "0123456789ABCDEF";
+    let color = "#";
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+  static generateImageElement(value: string): HTMLImageElement {
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+    const fontSize = 13;
+    const fontFamily = "Arial";
+    ctx.font = `${fontSize}px ${fontFamily}`;
+
+    const textWidth = ctx.measureText(value).width;
+
+    canvas.width = textWidth + 30;
+    canvas.height = fontSize + 30;
+
+    ctx.fillStyle = this.getRandomHexColor(); // Set background color
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#000000"; // Set text color
+    ctx.textBaseline = "middle"; // Set text baseline to middle for vertical centering
+    ctx.font = `${fontSize}px ${fontFamily}`; // Set font size again before drawing text
+    ctx.fillText(value, 15, canvas.height / 2); // Adjust the x position for horizontal centering
+
+    const dataURL = canvas.toDataURL(); // Convert canvas to data URL
+    const imgElement = document.createElement("img");
+    imgElement.src = dataURL;
+    return imgElement;
+  }
+}
+
+class CaptchaValue {
+  static textCaptcha: string = "";
+  static imageCaptcha: string = "";
+  static audioCaptcha: any = "";
+  static mathCaptcha: Record<string, any> = {};
+  static checkboxCaptcha: boolean = false;
+  static honeypot: boolean = false;
+
+  static set(name: keyof CaptchaValue, value: any): void {
+    (this as any)[name] = value;
+  }
+
+  static get(name: keyof CaptchaValue): any {
+    return (this as any)[name];
+  }
 }
 
 class CaptchaGenerator {
-  static textCaptcha(id: string, difficulty: string | 'medium'): string {
-    console.log(difficulty)
+  static textCaptchaValue: string = "";
+  static imageCaptchaValue: string = "";
+  static audioCaptchaValue: any = "";
+  static mathCaptchaValue: Object = {};
+  static checkboxCaptchaValue: boolean = false;
+  static honeypotValue: boolean = false;
+
+  static textCaptcha(
+    id: string,
+    difficulty: "easy" | "medium" | "strong"
+  ): string {
     const difficultyDispatcher = {
       easy: 6,
       medium: 10,
       strong: 14,
     };
+
+    const generatedValue = Utils.generateRandomString(
+      difficultyDispatcher[difficulty]
+    );
+    if(!generatedValue){
+      return;
+    }
+    this.textCaptchaValue = generatedValue;
+
     const targetCaptcha = document.getElementById(id);
+
     if (targetCaptcha) {
       const captchaValueElement = document.createElement("span");
       captchaValueElement.id = id + "-value";
       captchaValueElement.className = defaultCSSClasses.captcha.values;
-      captchaValueElement.textContent = Utils.generateRandomString(difficultyDispatcher[difficulty]);
+      const imgElement = Utils.generateImageElement(generatedValue);
+      captchaValueElement.appendChild(imgElement);
 
-      const captchaInputElement = document.createElement('input')
+      const captchaInputElement = document.createElement("input");
       captchaInputElement.id = id + "-input";
-      captchaInputElement.className = defaultCSSClasses.captcha.input
-      captchaInputElement.type = 'text'
+      captchaInputElement.className = defaultCSSClasses.captcha.input;
+      captchaInputElement.type = "text";
+      captchaInputElement.placeholder = "Type the answer!";
+
+      const captchaRfresh = document.createElement("img");
+      captchaRfresh.src = "/assets/img/icon.svg";
+      captchaRfresh.alt = "CAPTCHA Icon";
+      captchaRfresh.style.width = "15px"; // Changed from style to style.width
 
       targetCaptcha.appendChild(captchaValueElement);
       targetCaptcha.appendChild(captchaInputElement);
+      targetCaptcha.appendChild(captchaRfresh);
     } else {
       console.error("Target captcha not found");
     }
-    return "GeneratedTextCaptcha";
-  }
 
-  // Image Recognition CAPTCHA
-  static imageCaptcha(width: number, height: number): string {
-    // Logic to generate an image-based CAPTCHA with specified width and height
-    return "GeneratedImageCaptcha";
-  }
-
-  // Audio CAPTCHA
-  static audioCaptcha(length: number): string {
-    // Logic to generate an audio-based CAPTCHA of specified length
-    return "GeneratedAudioCaptcha";
-  }
-
-  // Mathematical CAPTCHA
-  static mathCaptcha(): string {
-    // Logic to generate a mathematical CAPTCHA
-    return "GeneratedMathCaptcha";
-  }
-
-  // Checkbox CAPTCHA
-  static checkboxCaptcha(): string {
-    // Logic to generate a checkbox-based CAPTCHA
-    return "GeneratedCheckboxCaptcha";
-  }
-
-  // Honeypot CAPTCHA
-  static honeypot(): string {
-    // Logic to generate a honeypot-based CAPTCHA
-    return "GeneratedHoneypotCaptcha";
+    return this.textCaptchaValue;
   }
 }
 
 class captchaValidity {
   static textCaptcha(id: string): boolean {
     const targetCaptcha = document.getElementById(id);
-    if(!targetCaptcha){
+    if (!targetCaptcha) {
       console.error("Can't valid the captcha since not found in target!");
     }
-    //const captchaValue 
+    //const captchaValue
     return false;
   }
 
@@ -230,8 +276,13 @@ class SimpleCaptcha {
     }
   }
   captcha(config: CaptchaConfig) {
-    const { formId, display, alghorithm, difficulty='medium', classes }: CaptchaConfig =
-      config;
+    const {
+      formId,
+      display,
+      alghorithm,
+      difficulty = "medium",
+      classes,
+    }: CaptchaConfig = config;
     if (display === false) {
       return;
     }
@@ -259,12 +310,15 @@ class SimpleCaptcha {
 
     submitButton.addEventListener("click", function (event) {
       event.preventDefault();
-      if(captchaValidity.textCaptcha(captchaId)){
-        (targetForm as HTMLFormElement).submit()
+      if (captchaValidity.textCaptcha(captchaId)) {
+        (targetForm as HTMLFormElement).submit();
       }
       console.log("try to submit " + formId);
       return;
     });
+  }
+  validity(config: any){
+    
   }
 
   init(config: any): void {
@@ -273,6 +327,7 @@ class SimpleCaptcha {
       if (Array.isArray(config.captcha)) {
         config.captcha.forEach((element: CaptchaConfig) => {
           this.captcha(element);
+          //console.log()
         });
       } else if (typeof config.captcha === "object") {
         this.captcha(config.captcha);
