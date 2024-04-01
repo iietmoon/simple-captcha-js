@@ -1,0 +1,34 @@
+name: 🚀 Publish to npm
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v2
+
+      - name: 📦 Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: 🚀 Update npm version
+        run: |
+          git config --global user.email "otmannj56@gmail.com"
+          git config --global user.name "iietmoon"
+          npm version patch
+        env:
+          NPM_TOKEN: ${{secrets.NPM_TOKEN}}
+
+      - name: 🧪 Publish to npm
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+          npm publish
+        env:
+          NPM_TOKEN: ${{secrets.NPM_TOKEN}}
