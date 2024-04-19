@@ -37,6 +37,7 @@ const defaultCSSClasses: DefaultCSSClasses = {
     values: "scjs-captcha-value",
     input: "scjs-captcha-input",
     flag: "scjs-captcha-flag",
+    refresh: "scjs-captch-refresh"
   },
 };
 
@@ -74,17 +75,29 @@ class Utils {
     canvas.width = textWidth + 30;
     canvas.height = fontSize + 30;
 
-    ctx.fillStyle = this.getRandomHexColor(); // Set background color
+    ctx.fillStyle = this.getRandomHexColor();
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = "#000000"; // Set text color
-    ctx.textBaseline = "middle"; // Set text baseline to middle for vertical centering
-    ctx.font = `${fontSize}px ${fontFamily}`; // Set font size again before drawing text
-    ctx.fillText(value, 15, canvas.height / 2); // Adjust the x position for horizontal centering
+    ctx.fillStyle = "#000000";
+    ctx.textBaseline = "middle";
+    ctx.font = `${fontSize}px ${fontFamily}`;
+    ctx.fillText(value, 15, canvas.height / 2);
 
-    const dataURL = canvas.toDataURL(); // Convert canvas to data URL
+    const dataURL = canvas.toDataURL();
     const imgElement = document.createElement("img");
     imgElement.src = dataURL;
     return imgElement;
+  }
+  static genetateRefreshButton(){
+    const btn = document.createElement('button')
+    btn.type = 'button'
+    btn.classList.add(defaultCSSClasses.captcha.refresh)
+    btn.addEventListener('click', function(){
+      console.log("Generate new captcha");
+    })
+    const icon = document.createElement('img');
+    icon.src = '/assets/img/refresh.svg'
+    btn.appendChild(icon)
+    return btn;
   }
 }
 
@@ -146,14 +159,17 @@ class CaptchaGenerator {
       captchaInputElement.type = "text";
       captchaInputElement.placeholder = "Type the answer!";
 
-      const captchaRfresh = document.createElement("img");
-      captchaRfresh.src = "/assets/img/icon.svg";
-      captchaRfresh.alt = "CAPTCHA Icon";
-      captchaRfresh.style.width = "15px"; // Changed from style to style.width
+      const captchaRefresh = Utils.genetateRefreshButton();
+
+      const cpatchaasd = document.createElement("img");
+      cpatchaasd.src = "/assets/img/icon.svg";
+      cpatchaasd.alt = "CAPTCHA Icon";
+      cpatchaasd.style.width = "15px"; // Changed from style to style.width
+      
 
       targetCaptcha.appendChild(captchaValueElement);
       targetCaptcha.appendChild(captchaInputElement);
-      targetCaptcha.appendChild(captchaRfresh);
+      targetCaptcha.appendChild(captchaRefresh);
     } else {
       console.error("Target captcha not found");
     }
@@ -320,14 +336,12 @@ class SimpleCaptcha {
   validity(config: any){
     
   }
-
   init(config: any): void {
     this.ribbon(config?.ribbon);
     if (config?.captcha) {
       if (Array.isArray(config.captcha)) {
         config.captcha.forEach((element: CaptchaConfig) => {
           this.captcha(element);
-          //console.log()
         });
       } else if (typeof config.captcha === "object") {
         this.captcha(config.captcha);

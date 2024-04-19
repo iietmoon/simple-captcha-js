@@ -118,6 +118,29 @@ $box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
                 border-color: $danger-color-600;
             }
         }
+        .scjs-captcha-input {
+            height: 33px;
+            border: $border-width solid $border-color-muted;
+            border-radius: $border-radius;
+            margin-bottom: 0;
+
+            &.error {
+                border-color: $danger-color-600;
+            }
+        }
+
+        .scjs-captch-refresh{
+            height: 33px;
+            width: 33px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: $border-radius;
+            background-color: $dark-color-600;
+            img{
+                filter: brightness(0) saturate(100%) invert(100%) sepia(100%) saturate(0%) hue-rotate(281deg) brightness(102%) contrast(105%);
+            }
+        }
 
         .scjs-captcha-flag {
             font-size: $small-font-size;
